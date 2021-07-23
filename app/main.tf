@@ -7,7 +7,7 @@ terraform {
 }
 module "app" {
     source = "../../../app"
-    allocated_storage    = 20
+    allocated_storage    = 21
     engine               = "mariadb"
     engine_version       = "10.4.13"
     instance_class       = "db.t3.micro"
