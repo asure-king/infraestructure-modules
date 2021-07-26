@@ -1,16 +1,19 @@
 provider "aws" {
-    region = "us-east-2"
+    region = var.region
+    version = "~> 3.0"
     #other provider settings
 }
 terraform {
     backend "s3" {}
+
+    required_version = "1.0.3"
 }
-module "app" {
-    source = "../../../app"
-    allocated_storage    = 21
+module "database" {
+    source = "../../../database/rds"
+    allocated_storage    = var.storage
     engine               = "mariadb"
     engine_version       = "10.4.13"
-    instance_class       = "db.t3.micro"
+    instance_class       = var.instance_type_1
     name                 = "mydb"
     username             = "foo"
     password             = "foobarbazx"
@@ -24,6 +27,6 @@ module "app" {
     iam_database_authentication_enabled = false
     identifier = "thor-production-mx"
     multi_az = "true"
-    port = "3306"
+    port = var.port
     publicly_accessible = false
-} 
+}
